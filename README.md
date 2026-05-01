@@ -6,7 +6,7 @@
 steps:
   - command: nix run nixpkgs#hello
     plugins:
-      - jcollie/nix-installer#HEAD
+      - jcollie/nix-installer#v1.0.0
 
 ```
 
