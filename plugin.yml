@@ -1,0 +1,7 @@
+name: Nix Installer
+description: Install the Nix package manager on your Buildkite runner.
+author: https://git.ocjtech.us/jeff/
+requirements: []
+configuration:
+  properties: {}
+  additionalProperties: false
