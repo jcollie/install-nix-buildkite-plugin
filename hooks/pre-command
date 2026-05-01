@@ -6,3 +6,4 @@ trap "rm -rf $tmp" EXIT
 echo "experimental-features = nix-command flakes" > "$tmp/nix.conf"
 
 cat /dev/null | curl -L https://nixos.org/nix/install | sh -s -- --yes --daemon --nix-extra-conf-file "$tmp/nix.conf"
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'; fi
