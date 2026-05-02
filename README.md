@@ -6,7 +6,7 @@
 steps:
   - command: nix run nixpkgs#hello
     plugins:
-      - jcollie/nix-installer#v1.0.0
+      - jcollie/install-nix#v1.0.0
 
 ```
 
@@ -17,5 +17,5 @@ steps:
 To run the tests:
 
 ```shell
-podman run -it --rm -v "$PWD:/plugin:ro" docker.io/buildkite/plugin-linter --id jcollie/nix-installer
+podman run -it --rm -v "$PWD:/plugin:ro" docker.io/buildkite/plugin-linter --id jcollie/install-nix
 ```
