@@ -10,7 +10,7 @@
 steps:
   - command: nix run nixpkgs#hello
     plugins:
-      - jcollie/install-nix#v1.2.0
+      - jcollie/install-nix#v1.3.0
 ```
 
 ### Configuration
