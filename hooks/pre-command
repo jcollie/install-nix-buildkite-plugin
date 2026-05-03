@@ -10,7 +10,7 @@
 # custom nix.conf.
 
 set -eu
-
+echo "OSTYPE: $OSTYPE"
 os=$(echo "$OSTYPE" | sed -E 's/darwin[0-9]+/darwin/g' | sed 's/-gnu//g')
 
 # Install Nix without touching the agent's init system. The `?ci=buildkite`
