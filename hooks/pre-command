@@ -22,7 +22,7 @@ case "$OSTYPE" in
   darwin*)
     curl --proto '=https' --tlsv1.2 -sSf -L \
         "https://install.determinate.systems/nix?ci=buildkite" \
-        | sh -s -- install --no-confirm --init none
+        | sh -s -- install --no-confirm
   ;;
   *)
     echo Unsupported OS!
