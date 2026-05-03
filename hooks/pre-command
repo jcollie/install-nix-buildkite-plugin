@@ -11,21 +11,24 @@
 
 set -eu
 
-os=$(echo "$OSTYPE" | sed -E 's/darwin[0-9]+/darwin/g' | sed 's/-gnu//g')
-
-# Linux needs '--init none' added so that it doesn't try to set
-# up an init system. It's an error to use that parameter on Darwin.
-init=""
-if [[ "$os" == "linux" ]]
-then
-init="--init none"
-fi
-
 # Install Nix without touching the agent's init system. The `?ci=buildkite`
 # query param is informational; it lets Determinate tag installer telemetry.
-curl --proto '=https' --tlsv1.2 -sSf -L \
-    "https://install.determinate.systems/nix?ci=buildkite" \
-    | sh -s -- install "$os" --no-confirm "$init"
+case "$OSTYPE" in
+  linux-gnu)
+    curl --proto '=https' --tlsv1.2 -sSf -L \
+        "https://install.determinate.systems/nix?ci=buildkite" \
+        | sh -s -- install linux --no-confirm --init none
+  ;;
+  darwin*)
+    curl --proto '=https' --tlsv1.2 -sSf -L \
+        "https://install.determinate.systems/nix?ci=buildkite" \
+        | sh -s -- install darwin --no-confirm
+  ;;
+  *)
+    echo Unsupported OS!
+    exit 1
+  ;;
+esac
 
 # Start the Determinate daemon ourselves since we passed `--init none`. Point
 # the Nix client at the daemon for the rest of this shell.
