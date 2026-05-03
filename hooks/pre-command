@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/bash
 
 # SPDX-FileCopyrightText: © 2026 Jeffrey C. Ollie <jeff@ocjtech.us>
 # SPDX-License-Identifier: MIT
@@ -11,11 +11,13 @@
 
 set -eu
 
+os=$(echo "$OSTYPE" | sed -E 's/darwin[0-9]*/darwin/g' | sed 's/-gnu//g')
+
 # Install Nix without touching the agent's init system. The `?ci=buildkite`
 # query param is informational; it lets Determinate tag installer telemetry.
 curl --proto '=https' --tlsv1.2 -sSf -L \
     "https://install.determinate.systems/nix?ci=buildkite" \
-    | sh -s -- install linux --no-confirm --init none
+    | sh -s -- install "$os" --no-confirm --init none
 
 # Start the Determinate daemon ourselves since we passed `--init none`. Point
 # the Nix client at the daemon for the rest of this shell.
