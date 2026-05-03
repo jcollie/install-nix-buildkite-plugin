@@ -1,3 +1,7 @@
+<!-- SPDX-FileCopyrightText: © 2026 Jeffrey C. Ollie <jeff@ocjtech.us> -->
+<!-- SPDX-License-Identifier: MIT -->
+
+
 # Install the Nix package manager on your Buildkite agent
 
 ## Example
@@ -6,8 +10,7 @@
 steps:
   - command: nix run nixpkgs#hello
     plugins:
-      - jcollie/install-nix#v1.0.0
-
+      - jcollie/install-nix#v1.1.0
 ```
 
 ### Configuration

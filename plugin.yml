@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: © 2026 Jeffrey C. Ollie <jeff@ocjtech.us>
+# SPDX-License-Identifier: MIT
+
 name: Nix Installer
 description: Install the Nix package manager on your Buildkite runner.
 author: https://git.ocjtech.us/jeff/

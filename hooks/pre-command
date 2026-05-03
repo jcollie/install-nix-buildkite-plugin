@@ -1,5 +1,8 @@
 #/bin/sh
 
+# SPDX-FileCopyrightText: © 2026 Jeffrey C. Ollie <jeff@ocjtech.us>
+# SPDX-License-Identifier: MIT
+
 # Buildkite pre-command hook: install Determinate Nix on the agent.
 #
 # Determinate's installer enables flakes and `nix-command` by default and is
