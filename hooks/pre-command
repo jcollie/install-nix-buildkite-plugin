@@ -11,7 +11,7 @@
 
 set -eu
 
-os=$(echo "$OSTYPE" | sed -E 's/darwin[0-9]*/darwin/g' | sed 's/-gnu//g')
+os=$(echo "$OSTYPE" | sed -E 's/darwin[0-9]+/darwin/g' | sed 's/-gnu//g')
 
 # Install Nix without touching the agent's init system. The `?ci=buildkite`
 # query param is informational; it lets Determinate tag installer telemetry.
