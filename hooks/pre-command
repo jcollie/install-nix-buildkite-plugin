@@ -11,6 +11,7 @@
 
 set -eu
 
+echo "--- Install Determinate Nix…"
 # Install Nix without touching the agent's init system. The `?ci=buildkite`
 # query param is informational; it lets Determinate tag installer telemetry.
 case "$OSTYPE" in
@@ -18,6 +19,10 @@ case "$OSTYPE" in
     curl --proto '=https' --tlsv1.2 -sSf -L \
         "https://install.determinate.systems/nix?ci=buildkite" \
         | sh -s -- install linux --no-confirm --init none
+
+        # Start the Determinate daemon ourselves since we passed `--init none`. Point
+        # the Nix client at the daemon for the rest of this shell.
+        nohup /usr/local/bin/determinate-nixd daemon > /dev/null 2>&1 &
   ;;
   darwin*)
     curl --proto '=https' --tlsv1.2 -sSf -L \
@@ -29,20 +34,22 @@ case "$OSTYPE" in
     exit 1
   ;;
 esac
+echo "~~~ Determinate Nix installer finished!"
 
-# Start the Determinate daemon ourselves since we passed `--init none`. Point
-# the Nix client at the daemon for the rest of this shell.
-nohup /usr/local/bin/determinate-nixd daemon &
-export NIX_REMOTE=daemon
+NIX_REMOTE=daemon
+export NIX_REMOTE
 
+echo "--- Wait for the Nix daemon to become responsive…"
 # Wait for the daemon to become responsive before handing control back to the
 # command step.
 while ! determinate-nixd status >/dev/null 2>&1; do
     sleep 0.1
 done
+echo "~~~ The Nix daemon is ready!"
 
 # Put `nix` on PATH for the command step. Buildkite sources hooks, so this
 # export propagates. With `--init none` we never edited any shell profile, so
 # we have to do it ourselves. The default profile holds the `nix` binary; the
 # per-user profile holds anything `nix profile install` adds later.
-export PATH="/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:$PATH"
+PATH="/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:$PATH"
+export PATH
